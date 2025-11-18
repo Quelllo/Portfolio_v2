@@ -104,7 +104,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white" ref={ref}>
+    <section id="contact" className="py-20 bg-white dark:bg-gray-800 transition-colors duration-300" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -112,9 +112,9 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Get In Touch</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 dark:text-white">Get In Touch</h2>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full mb-4" />
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Have a project in mind or just want to chat? I'd love to hear from you!
           </p>
         </motion.div>
@@ -128,7 +128,7 @@ const Contact = () => {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Name
                 </label>
                 <motion.input
@@ -140,13 +140,13 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
                   placeholder="Tom Konarski"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Email
                 </label>
                 <motion.input
@@ -158,13 +158,13 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
                   placeholder="your.email@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Message
                 </label>
                 <motion.textarea
@@ -176,7 +176,7 @@ const Contact = () => {
                   required
                   disabled={isSubmitting}
                   rows="5"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all resize-none disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -234,15 +234,15 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-4">Let's Connect</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-2xl font-bold mb-4 dark:text-white">Let's Connect</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 I'm always interested in hearing about new projects and opportunities. 
                 Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>
 
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Find me on</h4>
+              <h4 className="text-lg font-semibold dark:text-white">Find me on</h4>
               <div className="flex flex-wrap gap-4">
                 {socialLinks.map((link, index) => (
                   <motion.a
@@ -255,7 +255,7 @@ const Contact = () => {
                     transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
                     whileHover={{ scale: 1.1, y: -5 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-gray-200 ${link.bgColor} ${link.color} transition-all shadow-md hover:shadow-lg`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${link.bgColor} ${link.color} transition-all shadow-md hover:shadow-lg`}
                   >
                     {link.icon}
                     <span className="font-medium">{link.name}</span>

@@ -45,7 +45,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-indigo-50"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300"
     >
       {/* Animated Background Shapes */}
       <div className="absolute inset-0 overflow-hidden">
@@ -100,7 +100,7 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p
-            className="text-xl sm:text-2xl md:text-3xl text-gray-600 mb-8 min-h-[1.5em]"
+            className="text-xl sm:text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[1.5em]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
@@ -110,7 +110,7 @@ const Hero = () => {
           </motion.p>
 
           <motion.p
-            className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto mb-12"
+            className="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Mail } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Navigation = () => {
   const [activeSection, setActiveSection] = useState('hero');
@@ -223,7 +224,7 @@ const Navigation = () => {
         isVisible ? 'pointer-events-auto' : 'pointer-events-none'
       }`}
     >
-      <div className="relative bg-white rounded-full px-6 py-3 border border-gray-200 shadow-lg transition-all duration-300">
+      <div className="relative bg-white dark:bg-gray-800 rounded-full px-6 py-3 border border-gray-200 dark:border-gray-700 shadow-lg transition-all duration-300">
         <div className="relative flex items-center gap-2">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -236,13 +237,8 @@ const Navigation = () => {
                 className={`relative px-4 py-2 rounded-full transition-all duration-300 ${
                   isActive
                     ? 'text-white'
-                    : isDarkBackground
-                    ? 'text-white hover:text-white'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                 }`}
-                style={{
-                  color: isActive ? 'white' : isDarkBackground ? 'white' : undefined
-                }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -257,21 +253,21 @@ const Navigation = () => {
                 )}
                 
                 {/* Icon and Label */}
-                <div className="relative flex items-center gap-2" style={{
-                  color: isActive ? 'white' : isDarkBackground ? 'white' : undefined
-                }}>
-                  <Icon size={20} style={{
-                    color: isActive ? 'white' : isDarkBackground ? 'white' : undefined
-                  }} />
-                  <span className="text-sm font-medium hidden sm:inline" style={{
-                    color: isActive ? 'white' : isDarkBackground ? 'white' : undefined
-                  }}>
+                <div className="relative flex items-center gap-2">
+                  <Icon size={20} />
+                  <span className="text-sm font-medium hidden sm:inline">
                     {item.label}
                   </span>
                 </div>
               </motion.button>
             );
           })}
+          
+          {/* Divider */}
+          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-2" />
+          
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </div>
       </div>
     </motion.nav>
