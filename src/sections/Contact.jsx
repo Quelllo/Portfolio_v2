@@ -104,35 +104,46 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-800 transition-colors duration-300" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="relative py-32 bg-cream dark:bg-charcoal transition-colors duration-500 grid-bg overflow-hidden" ref={ref}>
+      {/* Editorial number background */}
+      <div className="editorial-number -left-12 top-32 select-none">04</div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, x: -50 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+          className="mb-24"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 dark:text-white">Get In Touch</h2>
-          <div className="w-20 h-1 bg-accent mx-auto rounded-full mb-4" />
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Have a project in mind or just want to chat? I'd love to hear from you!
+          <div className="flex items-baseline gap-6 mb-4">
+            <span className="font-mono text-orange text-sm font-bold tracking-widest uppercase">
+              // Contact
+            </span>
+            <div className="h-px bg-orange flex-1 opacity-30" />
+          </div>
+          <h2 className="font-display text-6xl sm:text-7xl lg:text-8xl font-black text-black-true dark:text-cream leading-none mb-6">
+            Let's Talk
+          </h2>
+          <p className="font-mono text-lg text-gray-warm max-w-2xl">
+            Have a project in mind or just want to chat? I'd love to hear from you.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Contact Form */}
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
+          {/* Contact Form - Brutalist */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-7"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Name
+                <label htmlFor="name" className="block font-mono text-xs uppercase tracking-wider text-black-true dark:text-cream mb-3 font-bold">
+                  Your Name
                 </label>
-                <motion.input
-                  whileFocus={{ scale: 1.01 }}
+                <input
                   type="text"
                   id="name"
                   name="name"
@@ -140,17 +151,16 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-4 border-3 border-black-true dark:border-cream bg-cream dark:bg-charcoal font-mono text-black-true dark:text-cream placeholder:text-gray-warm focus:outline-none focus:border-orange transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Tom Konarski"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email
+                <label htmlFor="email" className="block font-mono text-xs uppercase tracking-wider text-black-true dark:text-cream mb-3 font-bold">
+                  Your Email
                 </label>
-                <motion.input
-                  whileFocus={{ scale: 1.01 }}
+                <input
                   type="email"
                   id="email"
                   name="email"
@@ -158,25 +168,24 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-4 border-3 border-black-true dark:border-cream bg-cream dark:bg-charcoal font-mono text-black-true dark:text-cream placeholder:text-gray-warm focus:outline-none focus:border-orange transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="your.email@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Message
+                <label htmlFor="message" className="block font-mono text-xs uppercase tracking-wider text-black-true dark:text-cream mb-3 font-bold">
+                  Your Message
                 </label>
-                <motion.textarea
-                  whileFocus={{ scale: 1.01 }}
+                <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   disabled={isSubmitting}
-                  rows="5"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all resize-none disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
+                  rows="6"
+                  className="w-full px-6 py-4 border-3 border-black-true dark:border-cream bg-cream dark:bg-charcoal font-mono text-black-true dark:text-cream placeholder:text-gray-warm focus:outline-none focus:border-orange transition-colors resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -186,10 +195,10 @@ const Contact = () => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-xl ${
+                  className={`p-5 border-3 font-mono text-sm ${
                     submitStatus.type === 'success'
-                      ? 'bg-green-50 text-green-800 border border-green-200'
-                      : 'bg-red-50 text-red-800 border border-red-200'
+                      ? 'bg-orange/10 text-orange border-orange'
+                      : 'bg-red-500/10 text-red-600 border-red-600'
                   }`}
                 >
                   {submitStatus.message}
@@ -201,10 +210,10 @@ const Contact = () => {
                 disabled={isSubmitting}
                 whileHover={!isSubmitting ? { scale: 1.02 } : {}}
                 whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                className={`w-full py-3 px-6 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl ${
+                className={`w-full brutal-border py-5 px-8 font-mono font-bold uppercase tracking-wide flex items-center justify-center gap-3 transition-colors ${
                   isSubmitting
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-accent text-white hover:bg-accent/90'
+                    ? 'bg-gray-warm text-cream cursor-not-allowed opacity-50'
+                    : 'bg-orange text-cream hover:bg-orange-dark'
                 }`}
               >
                 {isSubmitting ? (
@@ -212,7 +221,7 @@ const Contact = () => {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                      className="w-5 h-5 border-2 border-cream border-t-transparent"
                     />
                     Sending...
                   </>
@@ -226,43 +235,76 @@ const Contact = () => {
             </form>
           </motion.div>
 
-          {/* Social Links & Info */}
+          {/* Social Links & Info - Brutalist Cards */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
+            className="lg:col-span-5 space-y-6"
           >
-            <div>
-              <h3 className="text-2xl font-bold mb-4 dark:text-white">Let's Connect</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {/* Info Card */}
+            <div className="brutal-border bg-black-true dark:bg-cream p-8">
+              <h3 className="font-display text-3xl font-bold mb-4 text-cream dark:text-black-true">
+                Let's Connect
+              </h3>
+              <p className="font-mono text-sm text-cream/80 dark:text-black-true/80 leading-relaxed">
                 I'm always interested in hearing about new projects and opportunities. 
                 Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>
 
+            {/* Social Links */}
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold dark:text-white">Find me on</h4>
-              <div className="flex flex-wrap gap-4">
+              <h4 className="font-mono text-xs uppercase tracking-widest text-gray-warm font-bold">
+                Find Me On
+              </h4>
+              <div className="space-y-3">
                 {socialLinks.map((link, index) => (
                   <motion.a
                     key={link.name}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${link.bgColor} ${link.color} transition-all shadow-md hover:shadow-lg`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="brutal-border bg-cream dark:bg-charcoal px-6 py-5 flex items-center gap-4 group"
                   >
-                    {link.icon}
-                    <span className="font-medium">{link.name}</span>
+                    <div className="text-orange group-hover:scale-110 transition-transform">
+                      {link.icon}
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-mono font-bold text-black-true dark:text-cream group-hover:text-orange transition-colors">
+                        {link.name}
+                      </span>
+                    </div>
+                    <div className="text-gray-warm group-hover:text-orange transition-colors">
+                      →
+                    </div>
                   </motion.a>
                 ))}
               </div>
             </div>
+
+            {/* Availability Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="brutal-border bg-orange p-6"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-3 h-3 bg-cream animate-pulse" />
+                <span className="font-mono text-xs uppercase tracking-widest text-cream font-bold">
+                  Status
+                </span>
+              </div>
+              <div className="font-display text-2xl font-bold text-cream">
+                Available for Work
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

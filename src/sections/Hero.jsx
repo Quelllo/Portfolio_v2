@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { ArrowDown } from 'lucide-react';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
@@ -7,7 +8,7 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
 
-  const texts = ['UI/UX Designer', 'Graphic Designer'];
+  const texts = ['UI/UX Designer', 'Graphic Designer', 'Creative Developer'];
 
   useEffect(() => {
     const currentText = texts[textIndex];
@@ -32,105 +33,180 @@ const Hero = () => {
           setTextIndex((textIndex + 1) % texts.length);
         }
       }
-    }, isDeleting ? 50 : 100); // Faster when deleting
+    }, isDeleting ? 50 : 100);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex, isDeleting, textIndex]); // texts is constant, safe to ignore
+  }, [currentIndex, isDeleting, textIndex]);
 
-  const scrollToProjects = () => {
-    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream dark:bg-charcoal transition-colors duration-500 grid-bg"
     >
-      {/* Animated Background Shapes */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Editorial number background */}
+      <div className="editorial-number -right-16 top-24 select-none">01</div>
+
+      {/* Geometric accent elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{
-            opacity: 1,
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            borderRadius: ['30%', '50%', '30%'],
-          }}
-          transition={{
-            opacity: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
-            scale: { duration: 20, repeat: Infinity, ease: 'linear' },
-            rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
-            borderRadius: { duration: 20, repeat: Infinity, ease: 'linear' },
-          }}
-          className="absolute -top-1/2 -left-1/4 w-96 h-96 bg-gradient-to-br from-accent/20 to-purple-300/20 blur-3xl"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.5 }}
+          className="absolute top-1/4 left-0 w-2 h-32 bg-orange"
         />
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{
-            opacity: 1,
-            scale: [1, 1.3, 1],
-            rotate: [0, -90, 0],
-            borderRadius: ['40%', '60%', '40%'],
-          }}
-          transition={{
-            opacity: { duration: 1.5, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] },
-            scale: { duration: 25, repeat: Infinity, ease: 'linear' },
-            rotate: { duration: 25, repeat: Infinity, ease: 'linear' },
-            borderRadius: { duration: 25, repeat: Infinity, ease: 'linear' },
-          }}
-          className="absolute -bottom-1/2 -right-1/4 w-96 h-96 bg-gradient-to-br from-indigo-300/20 to-pink-300/20 blur-3xl"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.7 }}
+          className="absolute bottom-1/4 right-0 w-2 h-48 bg-orange"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 0.1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3 }}
+          className="absolute top-1/3 right-1/4 w-64 h-64 border-4 border-orange rotate-45"
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 bg-clip-text text-transparent animated-gradient"
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            Tom Konarski
-          </motion.h1>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column - Main Text */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+            >
+              {/* Overline */}
+              <motion.div
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: '100%' }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="flex items-center gap-4 mb-8"
+              >
+                <div className="h-px bg-orange flex-1 max-w-[100px]" />
+                <span className="font-mono text-orange text-sm font-bold tracking-widest uppercase">
+                  Portfolio 2025
+                </span>
+              </motion.div>
 
-          <motion.p
-            className="text-xl sm:text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[1.5em]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            {displayText}
-            <span className="animate-pulse">|</span>
-          </motion.p>
+              {/* Name - Massive Display Type */}
+              <motion.h1
+                className="font-display text-7xl sm:text-8xl lg:text-9xl font-black text-black-true dark:text-cream mb-6 leading-[0.9]"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+              >
+                Tom<br />
+                <span className="text-orange">Konarski</span>
+              </motion.h1>
 
-          <motion.p
-            className="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            Crafting beautiful, intuitive digital experiences with a focus on user-centered design and modern web technologies.
-          </motion.p>
+              {/* Typing animation */}
+              <motion.div
+                className="font-mono text-2xl sm:text-3xl lg:text-4xl text-black-true dark:text-cream mb-6 min-h-[3rem] font-medium"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1 }}
+              >
+                <span className="text-orange">{'>'}</span> {displayText}
+                <span className="inline-block w-1 h-8 bg-orange ml-1 animate-pulse" />
+              </motion.div>
 
-          <motion.button
-            onClick={scrollToProjects}
-            className="px-8 py-4 bg-accent text-white rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.1, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View My Work
-          </motion.button>
-        </motion.div>
+              {/* Description */}
+              <motion.p
+                className="font-mono text-base sm:text-lg text-gray-warm max-w-xl mb-12 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
+                Crafting beautiful, intuitive digital experiences with a focus on user-centered design and modern web technologies.
+              </motion.p>
+
+              {/* CTA Button - Brutalist */}
+              <motion.button
+                onClick={scrollToAbout}
+                className="group brutal-border bg-orange px-10 py-5 font-mono font-bold text-lg uppercase tracking-wide text-cream relative overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  Explore Work
+                  <ArrowDown size={20} className="group-hover:translate-y-1 transition-transform" />
+                </span>
+                {/* Hover effect */}
+                <div className="absolute inset-0 bg-orange-dark transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+              </motion.button>
+            </motion.div>
+          </div>
+
+          {/* Right Column - Stats/Info Cards */}
+          <div className="lg:col-span-5 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
+              className="brutal-border bg-cream dark:bg-charcoal p-8"
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-gray-warm mb-2">
+                Current Status
+              </div>
+              <div className="font-display text-3xl font-bold text-black-true dark:text-cream">
+                Available for Freelance
+              </div>
+              <div className="mt-4 flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-orange animate-pulse" />
+                <span className="font-mono text-sm text-gray-warm">Open to new projects</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.8 }}
+              className="brutal-border bg-black-true dark:bg-cream p-8"
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-cream dark:text-black-true mb-2">
+                Specialties
+              </div>
+              <div className="space-y-2">
+                <div className="font-mono text-sm text-cream dark:text-black-true flex items-center gap-2">
+                  <span className="text-orange">→</span> Frontend Development
+                </div>
+                <div className="font-mono text-sm text-cream dark:text-black-true flex items-center gap-2">
+                  <span className="text-orange">→</span> React & TypeScript
+                </div>
+                <div className="font-mono text-sm text-cream dark:text-black-true flex items-center gap-2">
+                  <span className="text-orange">→</span> Design Systems
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 2 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="font-mono text-xs uppercase tracking-widest text-gray-warm">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ArrowDown size={20} className="text-orange" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

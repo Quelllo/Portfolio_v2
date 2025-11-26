@@ -14,7 +14,7 @@ function App() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-        className="min-h-screen bg-white overflow-x-hidden w-full max-w-full"
+        className="min-h-screen bg-cream dark:bg-charcoal overflow-x-hidden w-full max-w-full transition-colors duration-500"
       >
         <Navigation />
         

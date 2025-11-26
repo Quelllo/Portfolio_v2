@@ -224,8 +224,9 @@ const Navigation = () => {
         isVisible ? 'pointer-events-auto' : 'pointer-events-none'
       }`}
     >
-      <div className="relative bg-white dark:bg-gray-800 rounded-full px-6 py-3 border border-gray-200 dark:border-gray-700 shadow-lg transition-all duration-300">
-        <div className="relative flex items-center gap-2">
+      {/* Brutalist Navigation */}
+      <div className="relative brutal-border bg-cream dark:bg-charcoal px-4 py-3 transition-all duration-300">
+        <div className="relative flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -234,19 +235,19 @@ const Navigation = () => {
               <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`relative px-4 py-2 rounded-full transition-all duration-300 ${
+                className={`relative px-4 py-2 font-mono text-xs uppercase tracking-wider font-bold transition-all duration-300 ${
                   isActive
-                    ? 'text-white'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                    ? 'text-cream'
+                    : 'text-black-true dark:text-cream hover:text-orange dark:hover:text-orange'
                 }`}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {/* Active background */}
+                {/* Active background - brutalist block */}
                 {isActive && (
                   <motion.div
                     layoutId="activeBackground"
-                    className="absolute inset-0 bg-gradient-to-r from-accent to-purple-500 rounded-full"
+                    className="absolute inset-0 bg-orange"
                     initial={false}
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
@@ -254,8 +255,8 @@ const Navigation = () => {
                 
                 {/* Icon and Label */}
                 <div className="relative flex items-center gap-2">
-                  <Icon size={20} />
-                  <span className="text-sm font-medium hidden sm:inline">
+                  <Icon size={16} strokeWidth={2.5} />
+                  <span className="hidden sm:inline">
                     {item.label}
                   </span>
                 </div>
@@ -264,7 +265,7 @@ const Navigation = () => {
           })}
           
           {/* Divider */}
-          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-2" />
+          <div className="w-px h-6 bg-black-true/20 dark:bg-cream/20 mx-2" />
           
           {/* Theme Toggle */}
           <ThemeToggle />
