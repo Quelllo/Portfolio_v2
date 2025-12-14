@@ -1,12 +1,22 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { lazy, Suspense } from 'react';
+import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { ExternalLink, Github, X, CheckCircle2 } from 'lucide-react';
+import { useRef, useState, useCallback, useMemo } from 'react';
+import ProjectCard from '../components/ProjectCard';
 
+// Lazy load ProjectModal (only needed when a project is selected)
+const ProjectModal = lazy(() => import('../components/ProjectModal'));
+
+/**
+ * Optimized Projects section with:
+ * - Removed expensive image preloading (now handled by IntersectionObserver in ProjectCard)
+ * - Memoized project selection handler to prevent re-renders
+ * - Split into smaller components for better performance
+ * - GPU-friendly animations only
+ */
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [imagesLoaded, setImagesLoaded] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
@@ -151,22 +161,18 @@ const Projects = () => {
     },
   ];
 
-  // Preload all images
-  useEffect(() => {
-    const imagePromises = projects.map((project) => {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = resolve; // Resolve even on error to not block rendering
-        img.src = project.image;
-      });
-    });
+  // Memoize projects array to prevent recreation on every render
+  const projectsMemo = useMemo(() => projects, []);
 
-    Promise.all(imagePromises).then(() => {
-      setImagesLoaded(true);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // projects array is constant, so we can safely ignore the dependency
+  // Memoized project selection handler to prevent re-renders of all cards
+  const handleProjectSelect = useCallback((project) => {
+    setSelectedProject(project);
+  }, []);
+
+  // Memoized modal close handler
+  const handleModalClose = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
 
   return (
     <>
@@ -196,252 +202,27 @@ const Projects = () => {
             </p>
           </motion.div>
 
-          {/* Projects Grid - Brutalist Cards */}
+          {/* Projects Grid - Optimized with memoized cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <motion.div
+            {projectsMemo.map((project, index) => (
+              <ProjectCard
                 key={project.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView && imagesLoaded ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.34, 1.56, 0.64, 1] }}
-                onClick={() => setSelectedProject(project)}
-                className="group relative cursor-pointer"
-              >
-                {/* Brutalist border card */}
-                <div className="brutal-border bg-cream dark:bg-charcoal overflow-hidden h-full flex flex-col">
-                  {/* Image */}
-                  <div className="relative h-56 overflow-hidden bg-gray-warm/10">
-                    {imagesLoaded ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-warm/20 animate-pulse" />
-                    )}
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-orange opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between mb-3">
-                      <span className="font-mono text-xs font-bold text-orange tracking-wider">
-                        PROJECT {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <ExternalLink size={16} className="text-gray-warm group-hover:text-orange transition-colors" />
-                    </div>
-
-                    <h3 className="font-display text-2xl font-bold mb-3 text-black-true dark:text-cream group-hover:text-orange transition-colors">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="font-mono text-sm text-gray-warm mb-4 leading-relaxed flex-1">
-                      {project.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="font-mono text-xs px-2 py-1 border border-black-true dark:border-cream text-black-true dark:text-cream"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex gap-4 pt-4 border-t border-black-true/10 dark:border-cream/10">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                        className="font-mono text-xs uppercase tracking-wider text-orange hover:underline font-bold"
-                      >
-                        View Details →
-                      </button>
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="font-mono text-xs uppercase tracking-wider text-gray-warm hover:text-black-true dark:hover:text-cream transition-colors font-bold"
-                        >
-                          <Github size={14} className="inline mr-1" />
-                          Code
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                project={project}
+                index={index}
+                isInView={isInView}
+                onSelect={handleProjectSelect}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Project Detail Modal - Brutalist */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 bg-black-true/90 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 30 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 30 }}
-              transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="brutal-border bg-cream dark:bg-charcoal max-w-5xl w-full my-8 overflow-hidden"
-            >
-              {/* Modal Header */}
-              <div className="relative h-80 overflow-hidden">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black-true/60" />
-                
-                {/* Close button - top right */}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-6 right-6 p-3 bg-orange hover:bg-orange-dark transition-colors"
-                >
-                  <X size={24} className="text-cream" />
-                </button>
-
-                {/* Title overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black-true/90 to-transparent">
-                  <span className="font-mono text-xs text-orange uppercase tracking-widest font-bold mb-2 block">
-                    Project Details
-                  </span>
-                  <h2 className="font-display text-5xl font-black text-cream mb-3 leading-none">
-                    {selectedProject.title}
-                  </h2>
-                  <p className="font-mono text-base text-cream/90 max-w-3xl">
-                    {selectedProject.detailedDescription}
-                  </p>
-                </div>
-              </div>
-
-              {/* Modal Content */}
-              <div className="p-8 max-h-[65vh] overflow-y-auto">
-                {/* Tools Used */}
-                <div className="mb-12">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-2 h-12 bg-orange" />
-                    <h3 className="font-display text-3xl font-bold text-black-true dark:text-cream">
-                      Tools & Technologies
-                    </h3>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {selectedProject.tools.map((tool, index) => (
-                      <motion.div
-                        key={tool.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="brutal-border bg-cream dark:bg-charcoal p-5"
-                      >
-                        <h4 className="font-mono text-sm font-bold text-orange mb-2 uppercase tracking-wider">
-                          {tool.name}
-                        </h4>
-                        <p className="font-mono text-xs text-gray-warm leading-relaxed">
-                          {tool.purpose}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Development Steps */}
-                <div className="mb-12">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-2 h-12 bg-orange" />
-                    <h3 className="font-display text-3xl font-bold text-black-true dark:text-cream">
-                      Development Process
-                    </h3>
-                  </div>
-                  <div className="space-y-6">
-                    {selectedProject.steps.map((step, index) => (
-                      <motion.div
-                        key={step.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex gap-5"
-                      >
-                        <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-orange flex items-center justify-center font-mono font-bold text-cream text-lg">
-                            {String(index + 1).padStart(2, '0')}
-                          </div>
-                        </div>
-                        <div className="flex-1 pt-1">
-                          <h4 className="font-display text-xl font-bold text-black-true dark:text-cream mb-2 flex items-center gap-2">
-                            {step.title}
-                            <CheckCircle2 size={18} className="text-orange" />
-                          </h4>
-                          <p className="font-mono text-sm text-gray-warm leading-relaxed">
-                            {step.description}
-                          </p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="mb-8 pt-8 border-t-2 border-orange/20">
-                  <div className="flex flex-wrap gap-3">
-                    {selectedProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-mono text-sm font-bold px-4 py-2 border-2 border-orange text-orange uppercase tracking-wider"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap gap-4">
-                  {selectedProject.githubUrl && (
-                    <motion.a
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="brutal-border bg-orange px-8 py-4 font-mono font-bold uppercase tracking-wide text-cream flex items-center gap-3"
-                    >
-                      <ExternalLink size={20} />
-                      Visit Project
-                    </motion.a>
-                  )}
-                  <motion.button
-                    onClick={() => setSelectedProject(null)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="brutal-border bg-black-true dark:bg-cream px-8 py-4 font-mono font-bold uppercase tracking-wide text-cream dark:text-black-true"
-                  >
-                    Close
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Project Detail Modal - Lazy loaded for better initial bundle size */}
+      {selectedProject && (
+        <Suspense fallback={null}>
+          <ProjectModal project={selectedProject} onClose={handleModalClose} />
+        </Suspense>
+      )}
     </>
   );
 };
