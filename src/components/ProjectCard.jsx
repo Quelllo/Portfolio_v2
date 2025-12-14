@@ -75,7 +75,7 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
       {/* Brutalist border card */}
       <div className="brutal-border bg-cream dark:bg-charcoal overflow-hidden h-full flex flex-col">
         {/* Image container with fixed aspect ratio to prevent layout shifts */}
-        <div className="relative h-56 overflow-hidden bg-gray-warm/10" style={{ aspectRatio: '16/9' }}>
+        <div className={`relative h-56 overflow-hidden ${project.imageFit === 'contain' ? 'bg-black-true' : 'bg-gray-warm/10'}`} style={{ aspectRatio: '16/9' }}>
           {/* Image with fixed dimensions and lazy loading */}
           <div ref={imgRef} className="absolute inset-0">
             {isVisible && (
@@ -86,7 +86,7 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
                 height={225}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transition-[opacity,filter] duration-300 grayscale group-hover:grayscale-0"
+                className={`w-full h-full ${project.imageFit === 'contain' ? 'object-contain' : 'object-cover'} transition-[opacity,filter] duration-300 grayscale group-hover:grayscale-0`}
                 style={{
                   opacity: imageLoaded ? 1 : 0,
                   transform: 'translateZ(0)', // Force GPU acceleration
@@ -102,13 +102,6 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
             )}
           </div>
           
-          {/* Hover overlay - using opacity only (GPU-friendly) */}
-          <div 
-            className="absolute inset-0 bg-orange opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-            style={{
-              willChange: 'opacity', // Hint browser for optimization
-            }}
-          />
         </div>
 
         {/* Content */}
