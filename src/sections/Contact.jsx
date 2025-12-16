@@ -30,7 +30,13 @@ const Contact = () => {
 
       // Check if environment variables are set
       if (!serviceId || !templateId || !publicKey) {
-        throw new Error('EmailJS configuration is missing. Please check your .env file and restart the dev server.');
+        // Show user-friendly message instead of throwing error
+        setSubmitStatus({ 
+          type: 'error', 
+          message: 'EmailJS is not configured. Please contact me directly at enquiries@tomkonarski.com or set up EmailJS in the .env file.'
+        });
+        setIsSubmitting(false);
+        return;
       }
 
       const result = await emailjs.send(

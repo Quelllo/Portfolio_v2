@@ -51,6 +51,7 @@ const Projects = () => {
       tags: ['Figma', 'Photoshop', 'Unity'],
       color: 'from-purple-500 to-pink-500',
       githubUrl: '',
+      behanceUrl: 'https://www.behance.net/gallery/215065945/Gateway-A-UXUI-Case-Study',
       detailedDescription: 'An innovative educational platform that bridges physical and virtual classrooms, enabling remote students to attend lectures in immersive VR environments.',
       tools: [
         { name: 'Unity', purpose: 'VR environment development and 3D rendering' },
@@ -72,9 +73,9 @@ const Projects = () => {
       description: 'BRZRK spray-on chalk.',
       image: '/brzrk_banner_upscaled.jpg',
       imageFit: 'contain',
-      tags: ['Photoshop', 'Shopify', 'Framer'],
+      tags: ['Photoshop', 'Shopify', 'Illustrator'],
       color: 'from-orange-500 to-red-500',
-      githubUrl: 'https://brzrk.co.uk/',
+      shopifyUrl: 'https://brzrk.co.uk/',
       detailedDescription: 'A vibrant e-commerce platform for BRZRK spray-on chalk products, featuring dynamic visuals and seamless shopping experience.',
       tools: [
         { name: 'Shopify', purpose: 'E-commerce platform and payment processing' },
@@ -139,7 +140,7 @@ const Projects = () => {
     },
     {
       title: 'Graphic Design Agency',
-      description: 'Data visualization dashboard for tracking business metrics and generating insights.',
+      description: 'Professional portfolio website for a creative design agency, featuring brand identity work, print design, and digital campaigns.',
       image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop&auto=format',
       tags: ['React', 'Tailwind CSS', 'Vite'],
       color: 'from-pink-500 to-rose-500',

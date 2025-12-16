@@ -51,7 +51,7 @@ function App() {
               </section>
             }
           >
-            <Projects />
+          <Projects />
           </Suspense>
           <Contact />
         </main>

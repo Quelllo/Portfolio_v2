@@ -2,6 +2,38 @@ import { memo, useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 
+// Behance icon SVG component (lucide-react doesn't have Behance icon)
+const Behance = ({ size = 14, className = '' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M22 7h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h4M22 7v6M22 7H18M18 11h4M12 7H8a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM6 7H2v6h4M6 5h4" />
+  </svg>
+);
+
+// Shopify icon SVG component (simplified bag icon)
+const Shopify = ({ size = 14, className = '' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <path d="M16 10a4 4 0 0 1-8 0" />
+  </svg>
+);
+
 /**
  * Optimized ProjectCard component with:
  * - Memoization to prevent unnecessary re-renders
@@ -142,11 +174,23 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
           {/* Links */}
           <div className="flex gap-4 pt-4 border-t border-black-true/10 dark:border-cream/10">
             <button
-              onClick={handleLinkClick}
+              onClick={handleClick}
               className="font-mono text-xs uppercase tracking-wider text-orange hover:underline font-bold transition-opacity duration-200"
             >
               View Details →
             </button>
+            {project.shopifyUrl && (
+              <a
+                href={project.shopifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleLinkClick}
+                className="font-mono text-xs uppercase tracking-wider text-gray-warm hover:text-black-true dark:hover:text-cream transition-colors duration-200 font-bold"
+              >
+                <Shopify size={14} className="inline mr-1" />
+                Shopify
+              </a>
+            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -157,6 +201,18 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
               >
                 <Github size={14} className="inline mr-1" />
                 Code
+              </a>
+            )}
+            {project.behanceUrl && (
+              <a
+                href={project.behanceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleLinkClick}
+                className="font-mono text-xs uppercase tracking-wider text-gray-warm hover:text-black-true dark:hover:text-cream transition-colors duration-200 font-bold"
+              >
+                <Behance size={14} className="inline mr-1" />
+                Behance
               </a>
             )}
           </div>
