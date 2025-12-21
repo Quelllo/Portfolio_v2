@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, CheckCircle2 } from 'lucide-react';
 
@@ -10,6 +10,21 @@ import { ExternalLink, X, CheckCircle2 } from 'lucide-react';
  * - Reduced animation complexity for better performance
  */
 const ProjectModal = memo(({ project, onClose }) => {
+  const modalRef = useRef(null);
+  const contentRef = useRef(null);
+
+  // Scroll to top when modal opens
+  useEffect(() => {
+    if (project && modalRef.current) {
+      // Scroll the backdrop container to top
+      modalRef.current.scrollTo({ top: 0, behavior: 'instant' });
+      // Also ensure content is at top
+      if (contentRef.current) {
+        contentRef.current.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+  }, [project]);
+
   // Memoized close handler to prevent re-renders
   const handleClose = useCallback(() => {
     onClose();
@@ -32,11 +47,12 @@ const ProjectModal = memo(({ project, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div
+        ref={modalRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={handleBackdropClick}
-        className="fixed inset-0 bg-black-true/90 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"
+        className="fixed inset-0 bg-black-true/90 backdrop-blur-md z-50 flex items-start sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
         style={{
           // Use will-change for better performance during animation
           willChange: 'opacity',
@@ -51,7 +67,7 @@ const ProjectModal = memo(({ project, onClose }) => {
             ease: [0.34, 1.56, 0.64, 1],
           }}
           onClick={handleContentClick}
-          className="brutal-border bg-cream dark:bg-charcoal max-w-5xl w-full my-8 overflow-hidden"
+          className="brutal-border bg-cream dark:bg-charcoal max-w-5xl w-full my-0 sm:my-8 overflow-hidden min-h-full sm:min-h-0"
           style={{
             // Use transform instead of scale for better performance
             willChange: 'transform, opacity',
@@ -75,11 +91,20 @@ const ProjectModal = memo(({ project, onClose }) => {
             
             {/* Close button */}
             <button
-              onClick={handleClose}
-              className="absolute top-6 right-6 p-3 bg-orange hover:bg-orange-dark transition-colors duration-200"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClose();
+              }}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handleClose();
+              }}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 sm:p-3 bg-orange hover:bg-orange-dark active:bg-orange-dark transition-colors duration-200 z-50 touch-manipulation"
+              style={{ touchAction: 'manipulation' }}
               aria-label="Close modal"
             >
-              <X size={24} className="text-cream" />
+              <X size={24} className="text-cream pointer-events-none" />
             </button>
 
             {/* Title overlay */}
@@ -97,7 +122,7 @@ const ProjectModal = memo(({ project, onClose }) => {
           </div>
 
           {/* Modal Content */}
-          <div className="p-8 max-h-[65vh] overflow-y-auto">
+          <div ref={contentRef} className="p-4 sm:p-8 max-h-[calc(100vh-20rem)] sm:max-h-[65vh] overflow-y-auto">
             {/* Tools Used */}
             <div className="mb-12">
               <div className="flex items-center gap-4 mb-6">
