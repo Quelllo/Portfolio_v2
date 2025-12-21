@@ -101,7 +101,7 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
         // Use will-change for better GPU acceleration
       }}
       onClick={handleClick}
-      className="group relative cursor-pointer"
+      className="group relative cursor-pointer w-full max-w-sm md:max-w-none"
       style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
     >
       {/* Brutalist border card */}
@@ -142,13 +142,6 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
             <span className="font-mono text-xs font-bold text-orange tracking-wider">
               PROJECT {String(index + 1).padStart(2, '0')}
             </span>
-            <ExternalLink 
-              size={16} 
-              className="text-gray-warm transition-colors duration-200"
-              style={{
-                // Use CSS for hover instead of Tailwind group-hover
-              }}
-            />
           </div>
 
           <h3 className="font-display text-2xl font-bold mb-3 text-black-true dark:text-cream transition-colors duration-200">
@@ -213,6 +206,18 @@ const ProjectCard = memo(({ project, index, isInView, onSelect }) => {
               >
                 <Behance size={14} className="inline mr-1" />
                 Behance
+              </a>
+            )}
+            {project.websiteUrl && (
+              <a
+                href={project.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleLinkClick}
+                className="font-mono text-xs uppercase tracking-wider text-gray-warm hover:text-black-true dark:hover:text-cream transition-colors duration-200 font-bold"
+              >
+                <ExternalLink size={14} className="inline mr-1" />
+                Visit
               </a>
             )}
           </div>

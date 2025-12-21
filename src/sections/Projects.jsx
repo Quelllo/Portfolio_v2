@@ -97,6 +97,7 @@ const Projects = () => {
       description: 'A portfolio website for a real estate photographer showcasing property photography services and featured listings.',
       image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&h=800&fit=crop&auto=format',
       tags: ['React', 'Tailwind CSS', 'Vite'],
+      websiteUrl: 'https://ramenstudios.co.uk',
       color: 'from-green-500 to-teal-500',
       githubUrl: '',
       detailedDescription: 'A comprehensive weather application providing real-time forecasts, interactive maps, and personalized recommendations based on weather conditions.',
@@ -120,6 +121,7 @@ const Projects = () => {
       description: 'Modern social platform with stories, real-time chat, and content discovery features.',
       image: 'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=1200&h=800&fit=crop&auto=format',
       tags: ['React', 'Tailwind CSS', 'Vite'],
+      websiteUrl: 'https://69476593ce856d1a380411c3--flourishing-parfait-b123b7.netlify.app/',
       color: 'from-indigo-500 to-purple-500',
       githubUrl: '',
       detailedDescription: 'A full-featured social media platform with real-time messaging, story sharing, and advanced content discovery algorithms.',
@@ -143,6 +145,7 @@ const Projects = () => {
       description: 'Professional portfolio website for a creative design agency, featuring brand identity work, print design, and digital campaigns.',
       image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop&auto=format',
       tags: ['React', 'Tailwind CSS', 'Vite'],
+      websiteUrl: 'https://6947633d9e223608eccbe923--flourishing-parfait-b123b7.netlify.app/',
       color: 'from-pink-500 to-rose-500',
       githubUrl: '',
       detailedDescription: 'A powerful analytics dashboard providing real-time business insights through interactive data visualizations and automated reporting.',
@@ -205,7 +208,7 @@ const Projects = () => {
           </motion.div>
 
           {/* Projects Grid - Optimized with memoized cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center md:justify-items-stretch">
             {projectsMemo.map((project, index) => (
               <ProjectCard
                 key={project.title}
