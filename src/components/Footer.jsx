@@ -104,7 +104,7 @@ const Footer = () => {
               >
                 <Heart size={14} className="text-orange fill-orange" />
               </motion.div>
-              <span>using React & Tailwind</span>
+              <span>using React & Tailwind by Tom :)</span>
             </div>
           </div>
         </motion.div>
